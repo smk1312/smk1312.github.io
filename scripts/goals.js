@@ -1,5 +1,6 @@
 const noOfModals = 17; // temp value for no of implemented modals
 
+// Functions for creating elements
 const createElmnt = function (type, classes) {
   const newElement = document.createElement(type);
   newElement.classList.add(...classes);
@@ -9,7 +10,7 @@ const createAppend = function (type, classes, parent) {
   const newElement = createElmnt(type, classes);
   parent.appendChild(newElement);
 };
-
+// Adding goal grid
 const goalDiv = {
   goalContainer: document.querySelector(".goals"),
   createGoal: function (number) {
@@ -36,22 +37,57 @@ const goalDiv = {
     this.goalContainer.appendChild(wwgsIcon);
   },
 };
+
 for (let i = 0; i < noOfModals; i++) {
   goalDiv.createGoal(i);
 }
 goalDiv.addWWGSicon();
 // <-- Opening and closing modals -->
-const modals = [];
-const overlay = document.querySelector(".overlay");
-const btnsOpen = [];
-const btnsClose = [];
-let activeModal;
+const modal = {
+  overlay: document.querySelector(".overlay"),
+  modals: document.querySelectorAll(".goal-modal"),
+  btnsOpen: document.querySelectorAll(".goal"),
+  btnsClose: document.querySelectorAll(".close-goal-modal"),
+  openModal: function (modalNumber) {},
+  addCloseBtn: function (number) {
+    const closeBtn = createElmnt("btn", [
+      "close-goal-modal",
+      `btn-close-${number}`,
+    ]);
+    closeBtn.textContent = "x";
+    return closeBtn;
+  },
+  addModalText: function (number, parent) {
+    const textDiv = createElmnt("div", ["modal-text"]);
+    const modalDef = createElmnt("blockquote", ["modal-def"]);
+    createAppend("i", ["def-text"], modalDef);
+    textDiv.appendChild(modalDef);
+    createAppend("p", ["goal-modal-text"], textDiv);
+    parent.appendChild(textDiv);
+  },
+  createModal: function (number) {
+    const modal = createElmnt("div", [
+      "goal-modal",
+      `modal-${number}`,
+      "hidden",
+    ]);
+    modal.appendChild(this.addCloseBtn(number));
+    createAppend("img", ["modal-image"], modal);
+    createAppend("h1", ["goal-modal-header"], modal);
+    this.addModalText(number, modal);
+    document.querySelector(".modal-container").appendChild(modal);
+  },
+};
 
 for (let i = 0; i < noOfModals; i++) {
-  modals[i] = document.querySelector(`.modal-${i}`);
-  btnsOpen[i] = document.querySelector(`.btn-open-${i}`);
-  btnsClose[i] = document.querySelector(`.btn-close-${i}`);
+  modal.createModal(i);
 }
+
+const overlay = document.querySelector(".overlay");
+let activeModal;
+const modals = document.querySelectorAll(".goal-modal");
+const btnsOpen = document.querySelectorAll(".goal");
+const btnsClose = document.querySelectorAll(".close-goal-modal");
 const openModal = function (modal) {
   // Setting the active modal
   activeModal = modal;
