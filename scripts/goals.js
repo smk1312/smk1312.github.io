@@ -20,13 +20,14 @@ const goalDiv = {
       "show-modal",
       `btn-open-${number}`,
     ]);
-    this.addImg(number, "newpark");
-    this.addImg(number, "goal");
+    newElement.appendChild(this.addImg(number, "newpark"));
+    newElement.appendChild(this.addImg(number, "goal"));
     this.goalContainer.appendChild(newElement);
   },
   addImg: function (number, type) {
     const img = createElmnt("img", [`${type}-image`]);
-    img.src = `images/${type}-images/goal-${number + 1}-image`;
+    img.src = `/images/${type}-images/goal-${number + 1}-image.png`;
+    return img;
   },
 };
 for (let i = 0; i < noOfModals; i++) {
