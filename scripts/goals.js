@@ -29,10 +29,17 @@ const goalDiv = {
     img.src = `/images/${type}-images/goal-${number + 1}-image.png`;
     return img;
   },
+  addWWGSicon: function () {
+    const wwgsIcon = createElmnt("a", ["wwgs-icon"]);
+    wwgsIcon.href = "https://www.worldwiseschools.ie";
+    wwgsIcon.appendChild(this.addImg(17, "goal"));
+    this.goalContainer.appendChild(wwgsIcon);
+  },
 };
 for (let i = 0; i < noOfModals; i++) {
   goalDiv.createGoal(i);
 }
+goalDiv.addWWGSicon();
 // <-- Opening and closing modals -->
 const modals = [];
 const overlay = document.querySelector(".overlay");
